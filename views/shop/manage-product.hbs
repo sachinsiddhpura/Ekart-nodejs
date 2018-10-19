@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Manage Products</h2>
+    <br>
+    {{# each products }}
+        <div class="card w-75">
+            <div class="card-body">
+                <div class="container">
+                    <img class="img-responsive float-left" src="{{ this.imagePath }}" alt="Card image cap">
+                </div>
+                <h5 class="card-title">{{ this.title }}</h5>
+                <p class="card-text">{{ this.description }}</p>
+                <div>
+                    <div class="float-right"><strong>{{ this.price }}₹</strong></div>
+                </div>
+                <a href="/admin/edit/{{ this._id }}" class="btn btn-primary">Edit</a>
+                <a href="/admin/delete/{{ this._id }}" class="btn btn-danger">Remove</a>
+            </div>
+         </div>
+         <br>
+    {{/each}}
+
+</div>
+

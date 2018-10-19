@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h1>Add Products</h1>
+        <form action="/admin/edit/{{ doc._id }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Title</label>
+                <input type="text" id="name" name="title" class="form-control" value="{{ doc.title }}" placeholder="Title of item" required>
+            </div>
+             <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" value="{{ doc.description }}" rows="3"></textarea>
+            </div>
+             <div class="form-group">
+                <label for="password">Price</label>
+                <input type="number" name="price" value="{{ doc.price }}" class="form-control">
+            </div>
+             <div class="form-group">
+                <label for="exampleFormControlFile1">Image</label>
+                <input type="file" name="imagePath" value="{{ this.imagePath }}" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+            <input type="hidden" name="_csrf" value="{{ token }}">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</div>
