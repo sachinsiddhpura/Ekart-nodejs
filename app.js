@@ -18,7 +18,7 @@ var MongoStore = require('connect-mongo')(session);
 
 
 //mongoose connect
-mongoose.connect('mongodb://localhost:27017/Ekart');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Ekart');
 require('./config/passport');
 
 // view engine setup
@@ -54,10 +54,6 @@ app.use('/', (req, res, next)=>{
   next();
 });
 
-app.use('/admin', (req, res, next)=>{
-  res.locals.admin = req.isAuthenticated();
-  next();
-});
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
