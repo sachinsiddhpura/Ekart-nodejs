@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
     for(var i=0;i<docs.length;i += chunksize){
       productChunks.push(docs.slice(i, i+chunksize));
     }
-    res.render('shop/index', { title: 'EKart', products: productChunks });
+    res.render('shop/index', { title: 'Valenza ceramic', products: productChunks });
   }); 
 });
 

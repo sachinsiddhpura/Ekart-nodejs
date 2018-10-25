@@ -1,0 +1,16 @@
+<div class="container">
+    <h2>Manage Users</h2>
+    <br>
+    {{# each user }}
+        <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title">Name: {{ this.name }}</h5>
+                <h5 class="card-title">E-mail: {{ this.email}}</h5>
+                <a href="/admin/delete/user/{{ this._id }}" class="btn btn-danger">Remove</a>
+            </div>
+         </div>
+         <br>
+    {{/each}}
+
+</div>
+

@@ -19,7 +19,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 var Admin = require('../models/admin');
 var Product = require('../models/product');
-
+var User = require('../models/user');
 
 router.post('/add-product',isloggedIn, upload.single('imagePath'), (req, res, next)=>{
     console.log(req.file);
@@ -77,6 +77,12 @@ router.get('/manage-product', isloggedIn,  (req, res, next)=>{
     })  
 });
 
+router.get('/manage-users',isloggedIn, (req, res, next)=>{
+    User.find((err, user)=>{
+        res.render('shop/manage-user', {user: user});
+    })
+});
+
 router.get('/edit/:id', isloggedIn,  (req, res, next)=>{
     const q = {_id: req.params.id}
     Product.findById(q, (err, doc)=>{
@@ -107,6 +113,24 @@ router.get('/delete/:id', isloggedIn, (req, res, next)=>{
     });
 });
 
+
+
+//deleting users route
+router.get('/delete/user/:id', isloggedIn, (req, res, next)=>{
+    const query = {_id: req.params.id}
+    if(!ObjectID.isValid(req.params.id)){
+      return res.render('error', {message: "Error didn't found the given id"});
+    }
+    User.findOneAndRemove({_id: query}).then((product)=>{
+      if(!product){
+        return res.status(400).send();
+      }
+      console.log('User removed');
+      res.redirect('/admin/manage-users');
+    }).catch((e)=>{
+      res.status(400).send();
+    });
+});
 
 function isloggedIn(req, res, next){
         if(req.isAuthenticated() && req.user.isAdmin === true){
