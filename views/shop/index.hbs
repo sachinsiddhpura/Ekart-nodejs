@@ -1,6 +1,11 @@
+<br>
+<br><br>
+{{# if errors }}
+<h3>{{ errors }}</h3>
+{{/if}}
 {{# each products }}
     <div class="row">
-        {{# each this}}
+        {{# each this }}
         <div class="col-sm-6 col-md-4">
             <div class="card">
                 <img class="img-responsive" src="{{ this.imagePath }}" alt="Card image cap">
@@ -18,3 +23,4 @@
     </div>
     <br>
 {{/each}}
+

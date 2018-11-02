@@ -24,9 +24,33 @@ router.get('/', function(req, res, next) {
     for(var i=0;i<docs.length;i += chunksize){
       productChunks.push(docs.slice(i, i+chunksize));
     }
-    res.render('shop/index', { title: 'Valenza ceramic', products: productChunks });
+    res.render('shop/index', { title: 'Ekart', products: productChunks });
   }); 
 });
+
+//search box
+router.get('/search', (req, res, next)=>{
+  if(req.query.search){
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    Product.find({title: regex}, (err, docs)=>{
+      if(err){
+        return console.log(err);
+      }
+      if(docs.length < 1){
+        var msg = "Didn't match with any products, Try again!";
+      }
+      var productChunks = [];
+      var chunksize = 3;
+      for(var i=0;i<docs.length;i += chunksize){
+        productChunks.push(docs.slice(i, i+chunksize));
+      }
+      
+      res.render('shop/index', {title: 'Ekart', products: productChunks, errors: msg });
+    });
+  }else{
+    res.redirect('/');
+  }
+})
 
 //add-to-cart route
 router.get('/add-to-cart/:id', (req, res, next)=>{
@@ -62,6 +86,12 @@ router.get('/checkout', (req, res, next)=>{
   var cart = new Cart(req.session.cart);
   res.render('shop/checkout', {total: cart.totalPrice});
 });
+
+//regex function for fuzzy searching
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 
 //export code
 module.exports = router;

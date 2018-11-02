@@ -3,6 +3,7 @@ var localStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Admin = require('../models/admin');
 
+
 passport.serializeUser((user, done)=>{
     done(null, {id : user.id, isAdmin: user.isAdmin});
 });
@@ -83,6 +84,7 @@ passport.use('local.signin', new localStrategy({
         if(!user.comparePassword(password)){
             return done(null, false, {message: 'Wrong password.'})
         }
+        
         return done(null,user);
     });
 }));
